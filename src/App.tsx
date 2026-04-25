@@ -213,7 +213,7 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
         {/* Privacy note */}
         <p style={{ fontFamily: "'Heebo', sans-serif", fontSize: '11px', color: '#B0A898', textAlign: 'center', margin: '0', lineHeight: 1.5 }}>
           {tx.lead_privacy_note} ·{' '}
-          <a href="/privacy" target="_blank" style={{ color: GOLD, textDecoration: 'none' }}>{tx.lead_privacy}</a>
+          <a href="/privacy.html" target="_blank" style={{ color: GOLD, textDecoration: 'none' }}>{tx.lead_privacy}</a>
         </p>
 
         <button onClick={onSkip} disabled={submitting} style={{
