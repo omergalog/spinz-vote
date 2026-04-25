@@ -20,6 +20,7 @@ const slide = {
 type Answers = {
   transport: string
   age: string
+  gender: string
   city: string
   colors: string[]
   bike: string
@@ -27,8 +28,7 @@ type Answers = {
   intent: string
 }
 
-// New order: colors right after city (most important)
-const STEPS = ['transport', 'age', 'city', 'colors', 'bike', 'occupation', 'intent', 'lead'] as const
+const STEPS = ['transport', 'age', 'gender', 'city', 'colors', 'bike', 'occupation', 'intent', 'lead'] as const
 type Step = typeof STEPS[number]
 
 const btn: React.CSSProperties = {
@@ -246,7 +246,7 @@ export default function App() {
   const [done, setDone] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [answers, setAnswers] = useState<Answers>({
-    transport: '', age: '', city: '', colors: [], bike: '', occupation: '', intent: '',
+    transport: '', age: '', gender: '', city: '', colors: [], bike: '', occupation: '', intent: '',
   })
 
   const tx = lang ? t[lang] : t.he
@@ -258,6 +258,7 @@ export default function App() {
   const canNext = (): boolean => {
     if (currentStep === 'transport')  return !!answers.transport
     if (currentStep === 'age')        return !!answers.age
+    if (currentStep === 'gender')     return !!answers.gender
     if (currentStep === 'city')       return !!answers.city
     if (currentStep === 'colors')     return answers.colors.length === 3
     if (currentStep === 'bike')       return !!answers.bike
@@ -272,6 +273,7 @@ export default function App() {
       lang,
       transport:   answers.transport,
       age_group:   answers.age,
+      gender:      answers.gender,
       city:        answers.city,
       has_bike:    answers.bike,
       occupation:  answers.occupation,
@@ -326,6 +328,7 @@ export default function App() {
   const questionLabel: Record<Step, string> = {
     transport:  tx.q_transport,
     age:        tx.q_age,
+    gender:     tx.q_gender,
     city:       tx.q_city,
     colors:     tx.q_colors,
     bike:       tx.q_bike,
@@ -349,9 +352,16 @@ export default function App() {
         ))}
       </div>
     )
+    if (currentStep === 'gender') return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {[['male', tx.opt_male], ['female', tx.opt_female], ['other', tx.opt_other_gender]].map(([v, l]) => (
+          <OptionBtn key={v} label={l} selected={answers.gender === v} onClick={() => setAnswers({ ...answers, gender: v })} />
+        ))}
+      </div>
+    )
     if (currentStep === 'city') return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {[['tlv', tx.opt_tlv], ['tlv_area', tx.opt_tlv_area], ['haifa', tx.opt_haifa], ['bs', tx.opt_bs], ['jlm', tx.opt_jlm], ['sharon', tx.opt_sharon], ['shfela', tx.opt_shfela], ['other', tx.opt_other]].map(([v, l]) => (
+        {[['tlv_area', tx.opt_tlv_area], ['south', tx.opt_south], ['jlm_area', tx.opt_jlm_area], ['haifa', tx.opt_haifa], ['other', tx.opt_other]].map(([v, l]) => (
           <OptionBtn key={v} label={l} selected={answers.city === v} onClick={() => setAnswers({ ...answers, city: v })} />
         ))}
       </div>
