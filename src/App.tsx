@@ -24,11 +24,10 @@ type Answers = {
   city: string
   colors: string[]
   bike: string
-  occupation: string
   intent: string
 }
 
-const STEPS = ['gender', 'age', 'city', 'occupation', 'transport', 'bike', 'colors', 'intent', 'lead'] as const
+const STEPS = ['gender', 'age', 'city', 'transport', 'bike', 'colors', 'intent', 'lead'] as const
 type Step = typeof STEPS[number]
 
 const btn: React.CSSProperties = {
@@ -309,7 +308,7 @@ export default function App() {
   const [submitting, setSubmitting] = useState(false)
   const [startTime, setStartTime] = useState<number | null>(null)
   const [answers, setAnswers] = useState<Answers>({
-    transport: '', age: '', gender: '', city: '', colors: [], bike: '', occupation: '', intent: '',
+    transport: '', age: '', gender: '', city: '', colors: [], bike: '', intent: '',
   })
 
   const tx = lang ? t[lang] : t.he
@@ -325,7 +324,6 @@ export default function App() {
     if (currentStep === 'city')       return !!answers.city
     if (currentStep === 'colors')     return answers.colors.length === 3
     if (currentStep === 'bike')       return !!answers.bike
-    if (currentStep === 'occupation') return !!answers.occupation
     if (currentStep === 'intent')     return !!answers.intent
     return true
   }
@@ -345,7 +343,6 @@ export default function App() {
       gender:      answers.gender,
       city:        answers.city,
       has_bike:    answers.bike,
-      occupation:  answers.occupation,
       intent:      answers.intent,
       color_1:     answers.colors[0] ?? null,
       color_2:     answers.colors[1] ?? null,
@@ -503,7 +500,6 @@ export default function App() {
     city:       tx.q_city,
     colors:     tx.q_colors,
     bike:       tx.q_bike,
-    occupation: tx.q_occupation,
     intent:     tx.q_intent,
     lead:       tx.lead_title,
   }
@@ -542,13 +538,6 @@ export default function App() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {[['yes', tx.opt_yes_bike], ['no', tx.opt_no_bike], ['had', tx.opt_had_bike]].map(([v, l]) => (
           <OptionBtn key={v} label={l} selected={answers.bike === v} onClick={() => setAnswers({ ...answers, bike: v })} />
-        ))}
-      </div>
-    )
-    if (currentStep === 'occupation') return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {[['student', tx.opt_student], ['employed', tx.opt_employed], ['self', tx.opt_self], ['other', tx.opt_other_occ]].map(([v, l]) => (
-          <OptionBtn key={v} label={l} selected={answers.occupation === v} onClick={() => setAnswers({ ...answers, occupation: v })} />
         ))}
       </div>
     )
