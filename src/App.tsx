@@ -328,6 +328,11 @@ export default function App() {
     sessionStorage.setItem(SURVEY_SESSION_KEY, JSON.stringify({ lang, step, answers, intro: false }))
   }, [lang, step, answers, done])
 
+  // Preload story-hero image immediately on mount
+  useEffect(() => {
+    const img = new Image(); img.src = '/story-hero.jpg'
+  }, [])
+
   // Preload color images when user starts survey
   useEffect(() => {
     if (!lang) return
