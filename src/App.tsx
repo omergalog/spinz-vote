@@ -32,15 +32,17 @@ type Step = typeof STEPS[number]
 function OptionBtn({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
   return (
     <button onClick={onClick} style={{
-      width: '100%', padding: '14px 20px', borderRadius: '12px', textAlign: 'right',
+      width: '100%', padding: '16px 20px', borderRadius: '14px', textAlign: 'right',
       border: `2px solid ${selected ? GOLD : BORDER}`,
       backgroundColor: selected ? `${GOLD}18` : '#FFFFFF',
       color: selected ? DARK : MUTED,
-      fontFamily: "'Heebo', sans-serif", fontSize: '15px', fontWeight: selected ? 700 : 400,
+      fontFamily: "'Heebo', sans-serif", fontSize: '16px', fontWeight: selected ? 700 : 400,
       cursor: 'pointer', transition: 'all 0.18s', display: 'flex', alignItems: 'center', gap: '12px',
+      WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation',
+      minHeight: '56px',
     }}>
       <span style={{ flex: 1 }}>{label}</span>
-      {selected && <span style={{ color: GOLD, fontSize: '18px', flexShrink: 0 }}>✓</span>}
+      {selected && <span style={{ color: GOLD, fontSize: '20px', flexShrink: 0 }}>✓</span>}
     </button>
   )
 }
@@ -167,16 +169,18 @@ function LeadForm({ lang, onSubmit, onSkip, submitting }: {
       <input placeholder={tx.lead_phone} value={phone} onChange={e => setPhone(e.target.value)} style={inp} type="tel" />
       <input placeholder={tx.lead_email} value={email} onChange={e => setEmail(e.target.value)} style={inp} type="email" />
       <button onClick={() => onSubmit(name, phone, email)} disabled={!hasAny || submitting} style={{
-        width: '100%', padding: '15px', borderRadius: '12px', border: 'none',
+        width: '100%', padding: '17px', borderRadius: '14px', border: 'none',
         backgroundColor: hasAny ? GOLD : BORDER, color: hasAny ? DARK : '#AAA',
-        fontFamily: "'Heebo', sans-serif", fontSize: '15px', fontWeight: 800,
+        fontFamily: "'Heebo', sans-serif", fontSize: '16px', fontWeight: 800,
         cursor: hasAny ? 'pointer' : 'not-allowed', marginTop: '4px',
+        WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation',
       }}>
         {submitting ? '...' : tx.lead_submit}
       </button>
       <button onClick={onSkip} disabled={submitting} style={{
         background: 'none', border: 'none', color: MUTED,
-        fontFamily: "'Heebo', sans-serif", fontSize: '14px', cursor: 'pointer', padding: '8px',
+        fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer', padding: '12px',
+        WebkitTapHighlightColor: 'transparent',
       }}>
         {tx.lead_skip}
       </button>
@@ -356,19 +360,21 @@ export default function App() {
           <div style={{ display: 'flex', gap: '10px', marginTop: '28px', flexDirection: tx.dir === 'rtl' ? 'row' : 'row-reverse' }}>
             {step > 0 && (
               <button onClick={() => go(-1)} style={{
-                padding: '13px 24px', borderRadius: '10px', border: `1px solid ${BORDER}`,
+                padding: '16px 24px', borderRadius: '14px', border: `1px solid ${BORDER}`,
                 backgroundColor: '#FFFFFF', color: MUTED,
-                fontFamily: "'Heebo', sans-serif", fontSize: '14px', cursor: 'pointer',
+                fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer',
+                WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation', minHeight: '56px',
               }}>
                 {tx.back}
               </button>
             )}
             <button onClick={() => canNext() && go(1)} disabled={!canNext()} style={{
-              flex: 1, padding: '14px', borderRadius: '10px', border: 'none',
+              flex: 1, padding: '16px', borderRadius: '14px', border: 'none',
               backgroundColor: canNext() ? GOLD : BORDER,
               color: canNext() ? DARK : '#AAA',
-              fontFamily: "'Heebo', sans-serif", fontSize: '15px', fontWeight: 800,
+              fontFamily: "'Heebo', sans-serif", fontSize: '16px', fontWeight: 800,
               cursor: canNext() ? 'pointer' : 'not-allowed', transition: 'background-color 0.2s',
+              WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation', minHeight: '56px',
             }}>
               {tx.next}
             </button>
