@@ -77,6 +77,31 @@ function ColorPicker({ answers, setAnswers, lang }: { answers: Answers; setAnswe
 
   return (
     <div>
+      {/* Ranking legend */}
+      <div style={{
+        display: 'flex', justifyContent: 'center', gap: '16px',
+        marginBottom: '10px', flexWrap: 'wrap',
+      }}>
+        {([
+          [1, lang === 'he' ? 'הכי חשוב' : 'Most important'],
+          [2, lang === 'he' ? 'חשוב' : 'Important'],
+          [3, lang === 'he' ? 'פחות חשוב' : 'Less important'],
+        ] as [number, string][]).map(([n, label]) => (
+          <div key={n} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{
+              width: '22px', height: '22px', borderRadius: '50%',
+              backgroundColor: GOLD, color: '#fff',
+              fontSize: '12px', fontWeight: 900,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: "'Heebo', sans-serif",
+            }}>{n}</div>
+            <span style={{ fontFamily: "'Heebo', sans-serif", fontSize: '13px', color: MUTED }}>{label}</span>
+          </div>
+        ))}
+      </div>
+      <p style={{ textAlign: 'center', fontFamily: "'Heebo', sans-serif", fontSize: '12px', color: MUTED, margin: '0 0 14px', lineHeight: 1.5 }}>
+        {lang === 'he' ? 'הסדר שבחרת קובע — בחירה ראשונה מקבלת יותר משקל' : 'Order matters — your first pick carries the most weight'}
+      </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
         {BIKE_COLORS.map(c => {
           const rank = rankOf(c.id)
