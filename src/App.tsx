@@ -359,7 +359,7 @@ export default function App() {
     )
     if (currentStep === 'age') return (
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-        {[['under_18', lang === 'he' ? 'מתחת ל-18' : 'Under 18'], ['18-22', '18–22'], ['22-30', '22–30'], ['30-35', '30–35'], ['35+', '35+']].map(([v, l]) => (
+        {[['under_20', lang === 'he' ? 'מתחת ל-20' : 'Under 20'], ['20-30', '20–30'], ['30-40', '30–40'], ['40+', lang === 'he' ? 'מעל 40' : 'Over 40']].map(([v, l]) => (
           <OptionBtn key={v} label={l} selected={answers.age === v} onClick={() => setAnswers({ ...answers, age: v })} />
         ))}
       </div>
