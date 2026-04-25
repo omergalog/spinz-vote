@@ -639,7 +639,7 @@ export default function App() {
 
         {/* Nav — not on lead or intent (intent has its own CTA) */}
         {currentStep !== 'lead' && currentStep !== 'intent' && (
-          <div style={{ display: 'flex', gap: '10px', marginTop: '28px', flexDirection: lang === 'en' ? 'row-reverse' : 'row' }}>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '28px', flexDirection: 'row-reverse' }}>
             {step >= 0 && (
               <button onClick={() => step === 0 ? setIntro(true) : go(-1)} style={{
                 ...btn,
