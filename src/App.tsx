@@ -244,6 +244,7 @@ export default function App() {
   const [step, setStep] = useState(0)
   const [dir, setDir] = useState(1)
   const [done, setDone] = useState(false)
+  const [submittedWithLead, setSubmittedWithLead] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [answers, setAnswers] = useState<Answers>({
     transport: '', age: '', gender: '', city: '', colors: [], bike: '', occupation: '', intent: '',
@@ -285,6 +286,7 @@ export default function App() {
       lead_phone:  phone || null,
       lead_email:  email || null,
     })
+    setSubmittedWithLead(!!(name || phone || email))
     setSubmitting(false)
     setDone(true)
   }
@@ -317,9 +319,13 @@ export default function App() {
   if (done) return (
     <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: 'center', maxWidth: '440px', width: '100%' }}>
-        <div style={{ fontSize: '64px', marginBottom: '20px' }}>🎉</div>
+        <div style={{ fontSize: '64px', marginBottom: '20px' }}>{submittedWithLead ? '🎉' : '🙌'}</div>
         <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: '32px', color: DARK, marginBottom: '12px' }}>{tx.thanks_title}</div>
-        <p style={{ fontFamily: "'Heebo', sans-serif", color: MUTED, fontSize: '16px', lineHeight: 1.6 }}>{tx.thanks_sub}</p>
+        <p style={{ fontFamily: "'Heebo', sans-serif", color: MUTED, fontSize: '16px', lineHeight: 1.6 }}>
+          {submittedWithLead
+            ? (lang === 'he' ? 'נחזור אליך כשהאופניים מגיעים 🚲' : "We'll reach out when the bikes arrive 🚲")
+            : tx.thanks_sub}
+        </p>
         <img src="/logo.png" alt="SPINZ" style={{ height: '48px', marginTop: '40px', objectFit: 'contain' }} />
       </motion.div>
     </div>
