@@ -414,7 +414,7 @@ export default function App() {
         style={{ position: 'relative', height: '52vh', minHeight: '220px', flexShrink: 0, overflow: 'hidden' }}
       >
         <img
-          src="/story-hero.webp"
+          src="/story-hero.jpg"
           alt="Spinz bike"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
         />
