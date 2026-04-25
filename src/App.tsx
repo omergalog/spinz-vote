@@ -250,7 +250,7 @@ export default function App() {
   })
 
   const tx = lang ? t[lang] : t.he
-  const totalSteps = STEPS.length
+  const totalSteps = STEPS.length - 1  // lead step is conditional, not shown in counter
   const currentStep: Step = STEPS[step]
 
   const go = (delta: number) => { setDir(delta); setStep(s => s + delta) }
@@ -373,7 +373,7 @@ export default function App() {
     )
     if (currentStep === 'intent') return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {[['decided', tx.opt_decided], ['considering', tx.opt_considering], ['curious', tx.opt_curious]].map(([v, l]) => (
+        {[['decided', tx.opt_decided], ['considering', tx.opt_considering], ['curious', tx.opt_curious], ['not_interested', tx.opt_not_interested]].map(([v, l]) => (
           <OptionBtn key={v} label={l} selected={answers.intent === v} onClick={() => setAnswers({ ...answers, intent: v })} />
         ))}
         {answers.intent && (
