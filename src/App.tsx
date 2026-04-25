@@ -295,7 +295,7 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
 }
 
 const SURVEY_DONE_KEY = 'spinz_survey_done'
-const MIN_SURVEY_MS = 30_000 // 30 seconds minimum
+const MIN_SURVEY_MS = 8_000 // 8 seconds minimum
 
 export default function App() {
   const [intro, setIntro] = useState(true)
