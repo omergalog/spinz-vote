@@ -122,7 +122,7 @@ export const t = {
     lead_name: 'Full name',
     lead_phone: 'Phone',
     lead_email: 'Email',
-    lead_submit: 'Send & thanks!',
+    lead_submit: 'Submit — thank you!',
     thanks_title: 'Thank you! 🙌',
     thanks_sub: 'Your vote helps us choose the colors for the first shipment',
     next: 'Next',

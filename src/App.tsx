@@ -365,7 +365,7 @@ export default function App() {
 
   // Already submitted screen
   if (alreadyDone && !done) return (
-    <div style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+    <div dir="rtl" style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ textAlign: 'center', maxWidth: '400px', width: '100%' }}>
         <img src="/logo.png" alt="SPINZ" style={{ height: '52px', marginBottom: '28px', objectFit: 'contain' }} />
         <div style={{ fontSize: '48px', marginBottom: '16px' }}>🙌</div>
