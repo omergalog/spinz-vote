@@ -206,9 +206,9 @@ function LeadPage({ lang, answers, onSubmit, onSkip, submitting }: {
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <input placeholder={tx.lead_name} value={name} onChange={e => setName(e.target.value)} style={inp} />
-        <input placeholder={tx.lead_phone} value={phone} onChange={e => setPhone(e.target.value)} style={inp} type="tel" />
-        <input placeholder={tx.lead_email} value={email} onChange={e => setEmail(e.target.value)} style={inp} type="email" />
+        <input placeholder={tx.lead_name} value={name} onChange={e => setName(e.target.value)} style={inp} autoComplete="name" />
+        <input placeholder={tx.lead_phone} value={phone} onChange={e => setPhone(e.target.value)} style={inp} type="tel" autoComplete="tel" />
+        <input placeholder={tx.lead_email} value={email} onChange={e => setEmail(e.target.value)} style={inp} type="email" autoComplete="email" />
 
         <motion.button
           onClick={() => onSubmit(name, phone, email)}
