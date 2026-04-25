@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { t } from './data/i18n'
 import type { Lang } from './data/i18n'
@@ -310,6 +310,28 @@ export default function App() {
   const [answers, setAnswers] = useState<Answers>({
     transport: '', age: '', gender: '', city: '', colors: [], bike: '', intent: '',
   })
+
+  // Browser back button — navigate within survey instead of leaving page
+  const stateRef = useRef({ lang, intro, step, done })
+  stateRef.current = { lang, intro, step, done }
+
+  useEffect(() => {
+    if (lang) window.history.pushState({ survey: true }, '')
+  }, [step, lang, intro])
+
+  useEffect(() => {
+    const handler = () => {
+      const { lang, intro, step, done } = stateRef.current
+      if (!lang || done) return
+      window.history.pushState({ survey: true }, '')
+      if (intro) { setLang(null); return }
+      if (step === 0) { setIntro(true); return }
+      setDir(-1)
+      setStep(s => s - 1)
+    }
+    window.addEventListener('popstate', handler)
+    return () => window.removeEventListener('popstate', handler)
+  }, [])
 
   const tx = lang ? t[lang] : t.he
   const totalSteps = STEPS.length - 1  // lead step is conditional, not shown in counter
