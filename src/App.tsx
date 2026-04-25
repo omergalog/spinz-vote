@@ -151,8 +151,8 @@ function ColorPicker({ answers, setAnswers, lang }: { answers: Answers; setAnswe
 }
 
 // Beautiful lead capture page
-function LeadPage({ lang, answers, onSubmit, onSkip, submitting }: {
-  lang: Lang; answers: Answers;
+function LeadPage({ lang, onSubmit, onSkip, submitting }: {
+  lang: Lang;
   onSubmit: (n: string, p: string, e: string) => void;
   onSkip: () => void; submitting: boolean
 }) {
@@ -161,14 +161,6 @@ function LeadPage({ lang, answers, onSubmit, onSkip, submitting }: {
   const [email, setEmail] = useState('')
   const tx = t[lang]
   const hasAny = name.trim() || phone.trim() || email.trim()
-
-  const top3 = answers.colors.slice(0, 3)
-  const colorHex: Record<string, string> = {
-    gust: '#D4B896', echo: '#F5820D', zest: '#1A7A6E',
-    onyx: '#1C1C1C', skye: '#7BB8D4',
-    'color-6': '#8B3A3A', 'color-7': '#3A5C8B',
-    'color-8': '#4A7C3F', 'color-9': '#7A6A3A', 'color-10': '#5A3A7A',
-  }
 
   const inp: React.CSSProperties = {
     width: '100%', padding: '16px 18px', borderRadius: '14px',
@@ -409,7 +401,7 @@ export default function App() {
       </div>
     )
     if (currentStep === 'lead') return (
-      <LeadPage lang={lang} answers={answers} onSubmit={submitSurvey} onSkip={() => submitSurvey()} submitting={submitting} />
+      <LeadPage lang={lang} onSubmit={submitSurvey} onSkip={() => submitSurvey()} submitting={submitting} />
     )
   }
 
