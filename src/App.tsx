@@ -160,6 +160,7 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [consent, setConsent] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
   const tx = t[lang]
   const hasAny = name.trim() || phone.trim() || email.trim()
   const canSubmit = hasAny && consent
@@ -213,8 +214,52 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
         {/* Privacy note */}
         <p style={{ fontFamily: "'Heebo', sans-serif", fontSize: '11px', color: '#B0A898', textAlign: 'center', margin: '0', lineHeight: 1.5 }}>
           {tx.lead_privacy_note} ·{' '}
-          <a href="/privacy.html" target="_blank" style={{ color: GOLD, textDecoration: 'none' }}>{tx.lead_privacy}</a>
+          <button onClick={() => setShowPrivacy(true)} style={{ background: 'none', border: 'none', color: GOLD, cursor: 'pointer', fontSize: '11px', padding: 0, fontFamily: "'Heebo', sans-serif" }}>
+            {tx.lead_privacy}
+          </button>
         </p>
+
+        {/* Privacy modal */}
+        {showPrivacy && (
+          <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 200, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}
+            onClick={() => setShowPrivacy(false)}>
+            <div onClick={e => e.stopPropagation()} style={{
+              backgroundColor: '#F5F2EC', borderRadius: '24px 24px 0 0',
+              padding: '28px 24px 48px', width: '100%', maxWidth: '520px',
+              maxHeight: '80vh', overflowY: 'auto',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <span style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 800, fontSize: '18px', color: DARK }}>
+                  {lang === 'he' ? 'מדיניות פרטיות' : 'Privacy Policy'}
+                </span>
+                <button onClick={() => setShowPrivacy(false)} style={{ background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer', color: MUTED, padding: '4px 8px' }}>✕</button>
+              </div>
+              <div style={{ fontFamily: "'Heebo', sans-serif", fontSize: '14px', color: MUTED, lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {lang === 'he' ? <>
+                  <p><strong style={{ color: DARK }}>מי אנחנו</strong><br />Spinz הוא מותג אופניים ישראלי. הסקר נועד לאיסוף העדפות ציבוריות לגבי עיצוב המוצר.</p>
+                  <p><strong style={{ color: DARK }}>מה אנו אוספים</strong><br />תשובות אנונימיות לשאלות הסקר, ופרטי יצירת קשר (שם, טלפון, מייל) — רק אם בחרת להשאיר אותם מרצונך.</p>
+                  <p><strong style={{ color: DARK }}>למה</strong><br />פרטי יצירת קשר ישמשו אך ורק ליצירת קשר חד-פעמית כשהאופניים יגיעו. אנו לא מוכרים או מעבירים נתונים לצדדים שלישיים.</p>
+                  <p><strong style={{ color: DARK }}>קטינים</strong><br />אנו לא אוספים פרטים אישיים מאנשים מתחת לגיל 18.</p>
+                  <p><strong style={{ color: DARK }}>זכות מחיקה</strong><br />ניתן לפנות בכל עת למחיקת הנתונים: info@spinz.co.il</p>
+                </> : <>
+                  <p><strong style={{ color: DARK }}>Who we are</strong><br />Spinz is an Israeli bicycle brand. This survey collects public preferences about product design.</p>
+                  <p><strong style={{ color: DARK }}>What we collect</strong><br />Anonymous survey answers, and contact details (name, phone, email) — only if you choose to leave them.</p>
+                  <p><strong style={{ color: DARK }}>Why</strong><br />Contact details will only be used to reach out once when the bikes arrive. We never sell or share data with third parties.</p>
+                  <p><strong style={{ color: DARK }}>Minors</strong><br />We do not collect personal details from anyone under 18.</p>
+                  <p><strong style={{ color: DARK }}>Right to deletion</strong><br />You may request deletion at any time: info@spinz.co.il</p>
+                </>}
+              </div>
+              <button onClick={() => setShowPrivacy(false)} style={{
+                ...btn,
+                width: '100%', marginTop: '24px', padding: '14px', borderRadius: '14px',
+                backgroundColor: GOLD, border: 'none', color: DARK,
+                fontFamily: "'Heebo', sans-serif", fontSize: '15px', fontWeight: 700, cursor: 'pointer',
+              }}>
+                {lang === 'he' ? 'חזור למילוי פרטים' : 'Back to form'}
+              </button>
+            </div>
+          </div>
+        )}
 
         <button onClick={onSkip} disabled={submitting} style={{
           ...btn,
