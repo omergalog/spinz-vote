@@ -67,75 +67,78 @@ function ProgressBar({ step, total }: { step: number; total: number }) {
 }
 
 function ColorPicker({ answers, setAnswers, lang }: { answers: Answers; setAnswers: (a: Answers) => void; lang: Lang }) {
-  const tx = t[lang]
   const toggle = (id: string) => {
     const cur = answers.colors
     if (cur.includes(id)) setAnswers({ ...answers, colors: cur.filter(c => c !== id) })
     else if (cur.length < 3) setAnswers({ ...answers, colors: [...cur, id] })
   }
   const rankOf = (id: string) => answers.colors.indexOf(id) + 1
-  const img1 = BIKE_COLORS.filter(c => c.image === 1)
-  const img2 = BIKE_COLORS.filter(c => c.image === 2)
-
-  const renderGroup = (colors: typeof BIKE_COLORS, label: string, n: number) => (
-    <div style={{ marginBottom: '28px' }}>
-      <img
-        src={`/survey-${n}.jpeg`}
-        alt={label}
-        style={{ width: '100%', borderRadius: '16px', marginBottom: '14px', display: 'block', border: `1px solid ${BORDER}` }}
-      />
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {colors.map(c => {
-          const rank = rankOf(c.id)
-          const chosen = rank > 0
-          const full = answers.colors.length >= 3 && !chosen
-          const name = lang === 'he' ? c.nameHe : c.nameEn
-          return (
-            <button key={c.id} onClick={() => toggle(c.id)} disabled={full} style={{
-              ...btn,
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
-              padding: '10px 12px', borderRadius: '12px',
-              border: `2px solid ${chosen ? GOLD : BORDER}`,
-              backgroundColor: chosen ? `${GOLD}12` : '#FFFFFF',
-              cursor: full ? 'not-allowed' : 'pointer', opacity: full ? 0.4 : 1,
-              transition: 'all 0.18s', minWidth: '68px', position: 'relative',
-            }}>
-              <div style={{
-                width: '44px', height: '44px', borderRadius: '50%', backgroundColor: c.hex,
-                border: `3px solid ${chosen ? GOLD : 'transparent'}`,
-                boxShadow: chosen ? `0 0 0 2px ${BEIGE}, 0 0 0 4px ${GOLD}` : '0 2px 8px rgba(0,0,0,0.15)',
-                transition: 'all 0.18s',
-              }} />
-              {chosen && (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} style={{
-                  position: 'absolute', top: '4px', right: '4px',
-                  width: '20px', height: '20px', borderRadius: '50%',
-                  backgroundColor: GOLD, color: '#FFF',
-                  fontSize: '11px', fontWeight: 800,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: "'Heebo', sans-serif",
-                }}>
-                  {rank}
-                </motion.div>
-              )}
-              <span style={{
-                fontFamily: "'Heebo', sans-serif", fontSize: '10px',
-                color: chosen ? DARK : MUTED, fontWeight: chosen ? 700 : 400,
-                textAlign: 'center', lineHeight: 1.2,
-              }}>{name}</span>
-            </button>
-          )
-        })}
-      </div>
-    </div>
-  )
+  const full3 = answers.colors.length >= 3
 
   return (
     <div>
-      {renderGroup(img1, tx.img1_label, 1)}
-      {renderGroup(img2, tx.img2_label, 2)}
-      <p style={{ textAlign: 'center', fontFamily: "'Heebo', sans-serif", fontSize: '13px', color: MUTED, margin: '4px 0 0' }}>
-        {answers.colors.length === 0 && tx.q_colors_sub}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+        {BIKE_COLORS.map(c => {
+          const rank = rankOf(c.id)
+          const chosen = rank > 0
+          const dimmed = full3 && !chosen
+          const name = lang === 'he' ? c.nameHe : c.nameEn
+          return (
+            <motion.button
+              key={c.id}
+              onClick={() => toggle(c.id)}
+              disabled={dimmed}
+              whileTap={dimmed ? {} : { scale: 0.96 }}
+              style={{
+                ...btn,
+                padding: 0,
+                borderRadius: '14px',
+                border: `3px solid ${chosen ? GOLD : 'transparent'}`,
+                overflow: 'hidden',
+                position: 'relative',
+                opacity: dimmed ? 0.35 : 1,
+                transition: 'opacity 0.2s, border-color 0.2s',
+                cursor: dimmed ? 'not-allowed' : 'pointer',
+                boxShadow: chosen ? `0 0 0 1px ${GOLD}, 0 4px 16px rgba(201,168,112,0.35)` : '0 2px 8px rgba(0,0,0,0.1)',
+                backgroundColor: '#fff',
+              }}
+            >
+              <img
+                src={c.src}
+                alt={name}
+                style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }}
+              />
+              {chosen && (
+                <motion.div
+                  initial={{ scale: 0 }} animate={{ scale: 1 }}
+                  style={{
+                    position: 'absolute', top: '7px', right: '7px',
+                    width: '24px', height: '24px', borderRadius: '50%',
+                    backgroundColor: GOLD, color: '#fff',
+                    fontSize: '13px', fontWeight: 900,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontFamily: "'Heebo', sans-serif",
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  {rank}
+                </motion.div>
+              )}
+              <div style={{
+                padding: '6px 8px 8px',
+                fontFamily: "'Heebo', sans-serif", fontSize: '12px', fontWeight: chosen ? 700 : 500,
+                color: chosen ? DARK : MUTED, textAlign: 'center', lineHeight: 1.2,
+                backgroundColor: chosen ? `${GOLD}18` : '#fff',
+                transition: 'background-color 0.2s',
+              }}>
+                {name}
+              </div>
+            </motion.button>
+          )
+        })}
+      </div>
+      <p style={{ textAlign: 'center', fontFamily: "'Heebo', sans-serif", fontSize: '13px', color: MUTED, margin: '14px 0 0' }}>
+        {answers.colors.length === 0 && (lang === 'he' ? 'לחץ/י על אופניים לבחירה' : 'Tap a bike to select')}
         {answers.colors.length > 0 && answers.colors.length < 3 && `${lang === 'he' ? 'בחרת' : 'Selected'} ${answers.colors.length}/3`}
         {answers.colors.length === 3 && (lang === 'he' ? '✓ בחרת 3 צבעים' : '✓ 3 colors selected')}
       </p>
