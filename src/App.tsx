@@ -359,7 +359,14 @@ export default function App() {
 
   // Intro screen (after language selection)
   if (intro) return (
-    <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 24px' }}>
+    <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 24px', position: 'relative' }}>
+      <button onClick={() => setLang(null)} style={{
+        ...btn, position: 'absolute', top: '20px', right: tx.dir === 'rtl' ? '20px' : 'auto', left: tx.dir === 'ltr' ? '20px' : 'auto',
+        background: 'none', border: 'none', color: MUTED,
+        fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer', padding: '8px',
+      }}>
+        {tx.back}
+      </button>
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22,1,0.36,1] }}
         style={{ maxWidth: '440px', width: '100%', textAlign: 'center' }}>
         <img src="/logo.png" alt="SPINZ" style={{ height: '52px', objectFit: 'contain', marginBottom: '32px' }} />
@@ -392,13 +399,6 @@ export default function App() {
           {tx.intro_cta}
         </motion.button>
 
-        <button onClick={() => setLang(null)} style={{
-          ...btn, background: 'none', border: 'none', color: MUTED,
-          fontFamily: "'Heebo', sans-serif", fontSize: '14px', cursor: 'pointer',
-          marginTop: '16px', padding: '8px', textDecoration: 'underline', textUnderlineOffset: '3px',
-        }}>
-          {tx.back}
-        </button>
       </motion.div>
     </div>
   )
