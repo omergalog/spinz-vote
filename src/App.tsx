@@ -452,7 +452,6 @@ export default function App() {
   if (done) return (
     <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: 'center', maxWidth: '440px', width: '100%' }}>
-        <div style={{ fontSize: '64px', marginBottom: '20px' }}>{submittedWithLead ? '🎉' : '🙌'}</div>
         <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: '32px', color: DARK, marginBottom: '12px' }}>{tx.thanks_title}</div>
         <p style={{ fontFamily: "'Heebo', sans-serif", color: MUTED, fontSize: '16px', lineHeight: 1.6 }}>
           {submittedWithLead
