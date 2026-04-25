@@ -380,13 +380,13 @@ export default function App() {
 
   // Intro screen (after language selection)
   if (intro) return (
-    <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
+    <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', flexDirection: 'column', position: 'relative' }}>
       {/* Hero image — top 52% */}
       <motion.div
         initial={{ opacity: 0, scale: 1.08 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        style={{ position: 'relative', height: '52vh', minHeight: '220px', flexShrink: 0 }}
+        style={{ position: 'relative', height: '52vh', minHeight: '220px', flexShrink: 0, overflow: 'hidden' }}
       >
         <img
           src="/story-hero.webp"
