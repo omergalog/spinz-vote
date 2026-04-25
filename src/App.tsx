@@ -359,28 +359,53 @@ export default function App() {
 
   // Intro screen (after language selection)
   if (intro) return (
-    <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 24px', position: 'relative' }}>
-      <button onClick={() => setLang(null)} style={{
-        ...btn, position: 'absolute', top: '20px', right: tx.dir === 'rtl' ? '20px' : 'auto', left: tx.dir === 'ltr' ? '20px' : 'auto',
-        background: 'none', border: 'none', color: MUTED,
-        fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer', padding: '8px',
-      }}>
-        {tx.back}
-      </button>
-      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22,1,0.36,1] }}
-        style={{ maxWidth: '440px', width: '100%', textAlign: 'center' }}>
-        <img src="/logo.png" alt="SPINZ" style={{ height: '52px', objectFit: 'contain', marginBottom: '32px' }} />
-        <div style={{ fontFamily: "'Heebo', sans-serif", marginBottom: '32px' }}>
-          <p style={{ fontSize: '13px', color: MUTED, letterSpacing: '0.2em', textTransform: 'uppercase', margin: '0 0 16px' }}>
+    <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}>
+      {/* Hero image — top 52% */}
+      <motion.div
+        initial={{ opacity: 0, scale: 1.08 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        style={{ position: 'relative', height: '52vh', minHeight: '220px', flexShrink: 0 }}
+      >
+        <img
+          src="/story-hero.webp"
+          alt="Spinz bike"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
+        />
+        {/* gradient fade into BEIGE */}
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '120px', background: `linear-gradient(to bottom, transparent, ${BEIGE})` }} />
+        {/* back button over image */}
+        <button onClick={() => setLang(null)} style={{
+          ...btn, position: 'absolute', top: '16px',
+          right: tx.dir === 'rtl' ? '16px' : 'auto',
+          left: tx.dir === 'ltr' ? '16px' : 'auto',
+          background: 'none', border: 'none', color: '#fff',
+          fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer', padding: '8px',
+          textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+        }}>
+          {tx.back}
+        </button>
+      </motion.div>
+
+      {/* Content — bottom portion */}
+      <motion.div
+        initial={{ opacity: 0, y: 28 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '8px 28px 40px', textAlign: 'center' }}
+      >
+        <img src="/logo.png" alt="SPINZ" style={{ height: '44px', objectFit: 'contain', marginBottom: '20px' }} />
+        <div style={{ fontFamily: "'Heebo', sans-serif", marginBottom: '28px' }}>
+          <p style={{ fontSize: '13px', color: MUTED, letterSpacing: '0.2em', textTransform: 'uppercase', margin: '0 0 12px' }}>
             {tx.intro_sub}
           </p>
           <p style={{ fontSize: '16px', color: DARK, lineHeight: 1.8, margin: '0 0 4px' }}>
             {tx.intro_body1}
           </p>
-          <p style={{ fontSize: '16px', color: DARK, lineHeight: 1.8, margin: '0 0 20px', fontWeight: 700 }}>
+          <p style={{ fontSize: '16px', color: DARK, lineHeight: 1.8, margin: '0 0 18px', fontWeight: 700 }}>
             {tx.intro_body2}
           </p>
-          <div style={{ width: '40px', height: '2px', backgroundColor: GOLD, margin: '0 auto 20px' }} />
+          <div style={{ width: '40px', height: '2px', backgroundColor: GOLD, margin: '0 auto 18px' }} />
           <p style={{ fontSize: '15px', color: MUTED, lineHeight: 1.8, margin: 0 }}>
             {tx.intro_body3}<br />{tx.intro_body4}
           </p>
@@ -398,7 +423,6 @@ export default function App() {
         >
           {tx.intro_cta}
         </motion.button>
-
       </motion.div>
     </div>
   )
