@@ -366,7 +366,7 @@ export default function App() {
             cursor: 'pointer', letterSpacing: '0.02em',
           }}
         >
-          ← בואו נצביע
+          בואו נצביע ←
         </motion.button>
       </motion.div>
     </div>
