@@ -82,9 +82,9 @@ function ColorPicker({ answers, setAnswers, lang }: { answers: Answers; setAnswe
         marginBottom: '10px', flexWrap: 'wrap',
       }}>
         {([
-          [1, lang === 'he' ? 'הכי חשוב' : 'Most important'],
-          [2, lang === 'he' ? 'חשוב' : 'Important'],
-          [3, lang === 'he' ? 'פחות חשוב' : 'Less important'],
+          [1, lang === 'he' ? 'הכי מועדף' : 'Most preferred'],
+          [2, lang === 'he' ? 'השני הכי מועדף' : '2nd most preferred'],
+          [3, lang === 'he' ? 'השלישי הכי מועדף' : '3rd most preferred'],
         ] as [number, string][]).map(([n, label]) => (
           <div key={n} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <div style={{
