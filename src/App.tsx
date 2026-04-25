@@ -98,8 +98,11 @@ function ColorPicker({ answers, setAnswers, lang }: { answers: Answers; setAnswe
           </div>
         ))}
       </div>
-      <p style={{ textAlign: 'center', fontFamily: "'Heebo', sans-serif", fontSize: '12px', color: MUTED, margin: '0 0 14px', lineHeight: 1.5 }}>
+      <p style={{ textAlign: 'center', fontFamily: "'Heebo', sans-serif", fontSize: '12px', color: MUTED, margin: '0 0 4px', lineHeight: 1.5 }}>
         {lang === 'he' ? 'הסדר שבחרת קובע — בחירה ראשונה מקבלת יותר משקל' : 'Order matters — your first pick carries the most weight'}
+      </p>
+      <p style={{ textAlign: 'center', fontFamily: "'Heebo', sans-serif", fontSize: '12px', color: MUTED, margin: '0 0 14px', lineHeight: 1.5 }}>
+        {lang === 'he' ? 'לחיצה נוספת על צבע שנבחר מבטלת את הבחירה' : 'Tap a selected color again to deselect it'}
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
         {BIKE_COLORS.map(c => {
