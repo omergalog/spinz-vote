@@ -260,13 +260,15 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
                   <p><strong style={{ color: DARK }}>מה אנו אוספים</strong><br />תשובות אנונימיות לשאלות הסקר, ופרטי יצירת קשר (שם, טלפון, מייל) — רק אם בחרת להשאיר אותם מרצונך.</p>
                   <p><strong style={{ color: DARK }}>למה</strong><br />פרטי יצירת קשר ישמשו אך ורק ליצירת קשר חד-פעמית כשהאופניים יגיעו. אנו לא מוכרים או מעבירים נתונים לצדדים שלישיים.</p>
                   <p><strong style={{ color: DARK }}>קטינים</strong><br />אנו לא אוספים פרטים אישיים מאנשים מתחת לגיל 18.</p>
-                  <p><strong style={{ color: DARK }}>זכות מחיקה</strong><br />ניתן לפנות בכל עת למחיקת הנתונים: info@spinz.co.il</p>
+                  <p><strong style={{ color: DARK }}>שמירת נתונים והעברה בינלאומית</strong><br />הנתונים נשמרים בשרתי Supabase (ספק ענן מחוץ לישראל, פועל לפי GDPR). שרתי Vercel ו-Supabase עשויים לתעד כתובות IP אוטומטית לצורכי אבטחה — נתונים אלו אינם מקושרים לתשובות הסקר.</p>
+                  <p><strong style={{ color: DARK }}>זכות מחיקה</strong><br />ניתן לפנות בכל עת למחיקת הנתונים: info@spinzbikes.com</p>
                 </> : <>
                   <p><strong style={{ color: DARK }}>Who we are</strong><br />Spinz is an Israeli bicycle brand. This survey collects public preferences about product design.</p>
                   <p><strong style={{ color: DARK }}>What we collect</strong><br />Anonymous survey answers, and contact details (name, phone, email) — only if you choose to leave them.</p>
                   <p><strong style={{ color: DARK }}>Why</strong><br />Contact details will only be used to reach out once when the bikes arrive. We never sell or share data with third parties.</p>
                   <p><strong style={{ color: DARK }}>Minors</strong><br />We do not collect personal details from anyone under 18.</p>
-                  <p><strong style={{ color: DARK }}>Right to deletion</strong><br />You may request deletion at any time: info@spinz.co.il</p>
+                  <p><strong style={{ color: DARK }}>Data storage & international transfer</strong><br />Data is stored on Supabase servers (a cloud provider outside Israel, GDPR-compliant). Vercel and Supabase may automatically log IP addresses for security purposes — these are not linked to survey responses.</p>
+                  <p><strong style={{ color: DARK }}>Right to deletion</strong><br />You may request deletion at any time: info@spinzbikes.com</p>
                 </>}
               </div>
               <button onClick={() => setShowPrivacy(false)} style={{
