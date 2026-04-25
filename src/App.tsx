@@ -270,7 +270,7 @@ export default function App() {
 
   const submitSurvey = async (name = '', phone = '', email = '') => {
     setSubmitting(true)
-    await supabase.from('survey_responses').insert({
+    const { error } = await supabase.from('survey_responses').insert({
       lang,
       transport:   answers.transport,
       age_group:   answers.age,
@@ -286,6 +286,12 @@ export default function App() {
       lead_phone:  phone || null,
       lead_email:  email || null,
     })
+    if (error) {
+      console.error('Survey insert error:', error)
+      alert('שגיאה בשמירה: ' + error.message)
+      setSubmitting(false)
+      return
+    }
     setSubmittedWithLead(!!(name || phone || email))
     setSubmitting(false)
     setDone(true)
