@@ -159,8 +159,10 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
+  const [consent, setConsent] = useState(false)
   const tx = t[lang]
   const hasAny = name.trim() || phone.trim() || email.trim()
+  const canSubmit = hasAny && consent
 
   const inp: React.CSSProperties = {
     width: '100%', padding: '16px 18px', borderRadius: '14px',
@@ -181,26 +183,43 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
         <input placeholder={tx.lead_phone} value={phone} onChange={e => setPhone(e.target.value)} style={inp} type="tel" autoComplete="tel" />
         <input placeholder={tx.lead_email} value={email} onChange={e => setEmail(e.target.value)} style={inp} type="email" autoComplete="email" />
 
+        {/* Consent checkbox */}
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', marginTop: '4px' }}>
+          <input
+            type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)}
+            style={{ marginTop: '3px', accentColor: GOLD, width: '16px', height: '16px', flexShrink: 0, cursor: 'pointer' }}
+          />
+          <span style={{ fontFamily: "'Heebo', sans-serif", fontSize: '13px', color: MUTED, lineHeight: 1.5 }}>
+            {tx.lead_consent}
+          </span>
+        </label>
+
         <motion.button
           onClick={() => onSubmit(name, phone, email)}
-          disabled={!hasAny || submitting}
-          whileTap={hasAny ? { scale: 0.97 } : {}}
+          disabled={!canSubmit || submitting}
+          whileTap={canSubmit ? { scale: 0.97 } : {}}
           style={{
             ...btn,
             width: '100%', padding: '18px', borderRadius: '14px', border: 'none',
-            backgroundColor: hasAny ? GOLD : BORDER,
-            color: hasAny ? DARK : '#AAA',
+            backgroundColor: canSubmit ? GOLD : BORDER,
+            color: canSubmit ? DARK : '#AAA',
             fontFamily: "'Heebo', sans-serif", fontSize: '16px', fontWeight: 800,
-            cursor: hasAny ? 'pointer' : 'not-allowed', marginTop: '8px',
+            cursor: canSubmit ? 'pointer' : 'not-allowed', marginTop: '4px',
           }}
         >
           {submitting ? '...' : tx.lead_submit}
         </motion.button>
 
+        {/* Privacy note */}
+        <p style={{ fontFamily: "'Heebo', sans-serif", fontSize: '11px', color: '#B0A898', textAlign: 'center', margin: '0', lineHeight: 1.5 }}>
+          {tx.lead_privacy_note} ·{' '}
+          <a href="/privacy" target="_blank" style={{ color: GOLD, textDecoration: 'none' }}>{tx.lead_privacy}</a>
+        </p>
+
         <button onClick={onSkip} disabled={submitting} style={{
           ...btn,
           background: 'none', border: 'none', color: MUTED,
-          fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer', padding: '12px',
+          fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer', padding: '8px',
           textDecoration: 'underline', textUnderlineOffset: '3px',
         }}>
           {tx.lead_skip}
@@ -372,8 +391,8 @@ export default function App() {
         {answers.intent && (
           <AnimatePresence>
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {/* Primary CTA — only for interested users */}
-              {answers.intent !== 'not_interested' && (
+              {/* Primary CTA — only for interested users above 18 */}
+              {answers.intent !== 'not_interested' && answers.age !== 'under_20' && (
                 <button onClick={() => go(1)} style={{
                   ...btn,
                   width: '100%', padding: '16px', borderRadius: '14px', border: 'none',
