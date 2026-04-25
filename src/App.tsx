@@ -297,21 +297,42 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
 }
 
 const SURVEY_DONE_KEY = 'spinz_survey_done'
+const SURVEY_SESSION_KEY = 'spinz_survey_session'
 const MIN_SURVEY_MS = 8_000 // 8 seconds minimum
 
+function loadSession() {
+  try {
+    const raw = sessionStorage.getItem(SURVEY_SESSION_KEY)
+    return raw ? JSON.parse(raw) : null
+  } catch { return null }
+}
+
 export default function App() {
-  const [intro, setIntro] = useState(true)
-  const [lang, setLang] = useState<Lang | null>(null)
-  const [step, setStep] = useState(0)
+  const session = loadSession()
+  const [intro, setIntro] = useState(session ? false : true)
+  const [lang, setLang] = useState<Lang | null>(session?.lang ?? null)
+  const [step, setStep] = useState(session?.step ?? 0)
   const [dir, setDir] = useState(1)
   const [done, setDone] = useState(false)
   const [alreadyDone] = useState(() => !!localStorage.getItem(SURVEY_DONE_KEY))
   const [submittedWithLead, setSubmittedWithLead] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [startTime, setStartTime] = useState<number | null>(null)
-  const [answers, setAnswers] = useState<Answers>({
+  const [answers, setAnswers] = useState<Answers>(session?.answers ?? {
     transport: '', age: '', gender: '', city: '', colors: [], bike: '', intent: '',
   })
+
+  // Persist session on every state change
+  useEffect(() => {
+    if (!lang || done) return
+    sessionStorage.setItem(SURVEY_SESSION_KEY, JSON.stringify({ lang, step, answers, intro: false }))
+  }, [lang, step, answers, done])
+
+  // Preload color images when user starts survey
+  useEffect(() => {
+    if (!lang) return
+    BIKE_COLORS.forEach(c => { const img = new Image(); img.src = c.src })
+  }, [lang])
 
   // Browser back button — navigate within survey instead of leaving page
   const stateRef = useRef({ lang, intro, step, done })
@@ -382,6 +403,7 @@ export default function App() {
       return
     }
     localStorage.setItem(SURVEY_DONE_KEY, '1')
+    sessionStorage.removeItem(SURVEY_SESSION_KEY)
     setSubmittedWithLead(!!(name || phone || email))
     setSubmitting(false)
     setDone(true)
