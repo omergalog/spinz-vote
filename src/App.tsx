@@ -350,7 +350,7 @@ export default function App() {
       if (intro) { setLang(null); return }
       if (step === 0) { setIntro(true); return }
       setDir(-1)
-      setStep(s => s - 1)
+      setStep((s: number) => s - 1)
     }
     window.addEventListener('popstate', handler)
     return () => window.removeEventListener('popstate', handler)
@@ -360,7 +360,7 @@ export default function App() {
   const totalSteps = STEPS.length - 1  // lead step is conditional, not shown in counter
   const currentStep: Step = STEPS[step]
 
-  const go = (delta: number) => { setDir(delta); setStep(s => s + delta) }
+  const go = (delta: number) => { setDir(delta); setStep((s: number) => s + delta) }
 
   const canNext = (): boolean => {
     if (currentStep === 'transport')  return !!answers.transport
