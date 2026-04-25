@@ -180,27 +180,6 @@ function LeadPage({ lang, answers, onSubmit, onSkip, submitting }: {
 
   return (
     <div>
-      {/* Top 3 colors display */}
-      {top3.length > 0 && (
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '28px' }}>
-          {top3.map((id, i) => (
-            <div key={id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-              <div style={{
-                width: i === 0 ? '52px' : '42px',
-                height: i === 0 ? '52px' : '42px',
-                borderRadius: '50%',
-                backgroundColor: colorHex[id] ?? '#999',
-                border: `3px solid ${GOLD}`,
-                boxShadow: i === 0 ? `0 0 0 3px ${BEIGE}, 0 0 0 5px ${GOLD}` : 'none',
-              }} />
-              <span style={{ fontFamily: "'Heebo', sans-serif", fontSize: '11px', color: GOLD, fontWeight: 800 }}>
-                {i + 1}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
-
       <p style={{ fontFamily: "'Heebo', sans-serif", fontSize: '14px', color: MUTED, marginBottom: '24px', lineHeight: 1.6, textAlign: 'center' }}>
         {tx.lead_sub}
       </p>
