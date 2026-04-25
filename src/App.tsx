@@ -444,6 +444,11 @@ export default function App() {
         >
           {tx.intro_cta}
         </motion.button>
+        <p style={{ fontFamily: "'Heebo', sans-serif", fontSize: '12px', color: MUTED, marginTop: '18px', lineHeight: 1.6 }}>
+          🔒 {lang === 'he'
+            ? 'הסקר אנונימי לחלוטין — פרטים אישיים נשמרים רק אם תבחר/י להשאיר אותם בסוף'
+            : 'Fully anonymous — personal details are only saved if you choose to leave them at the end'}
+        </p>
       </motion.div>
     </div>
   )
