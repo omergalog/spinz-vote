@@ -39,7 +39,7 @@ function OptionBtn({ label, selected, onClick }: { label: string; selected: bool
   return (
     <button onClick={onClick} style={{
       ...btn,
-      width: '100%', padding: '16px 20px', borderRadius: '14px', textAlign: 'right',
+      width: '100%', padding: '16px 20px', borderRadius: '14px', textAlign: 'start',
       border: `2px solid ${selected ? GOLD : BORDER}`,
       backgroundColor: selected ? `${GOLD}18` : '#FFFFFF',
       color: selected ? DARK : MUTED,
@@ -615,7 +615,7 @@ export default function App() {
 
         {/* Nav — not on lead or intent (intent has its own CTA) */}
         {currentStep !== 'lead' && currentStep !== 'intent' && (
-          <div style={{ display: 'flex', gap: '10px', marginTop: '28px', flexDirection: tx.dir === 'rtl' ? 'row' : 'row-reverse' }}>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '28px', flexDirection: 'row' }}>
             {step >= 0 && (
               <button onClick={() => step === 0 ? setIntro(true) : go(-1)} style={{
                 ...btn,
