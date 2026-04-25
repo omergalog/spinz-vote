@@ -275,6 +275,7 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
 }
 
 export default function App() {
+  const [intro, setIntro] = useState(true)
   const [lang, setLang] = useState<Lang | null>(null)
   const [step, setStep] = useState(0)
   const [dir, setDir] = useState(1)
@@ -331,6 +332,45 @@ export default function App() {
     setSubmitting(false)
     setDone(true)
   }
+
+  // Intro screen
+  if (intro) return (
+    <div style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 24px' }}>
+      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22,1,0.36,1] }}
+        style={{ maxWidth: '440px', width: '100%', textAlign: 'center' }}>
+        <img src="/logo.png" alt="SPINZ" style={{ height: '52px', objectFit: 'contain', marginBottom: '32px' }} />
+
+        <div style={{ fontFamily: "'Heebo', sans-serif", marginBottom: '32px' }}>
+          <p style={{ fontSize: '13px', color: MUTED, letterSpacing: '0.2em', textTransform: 'uppercase', margin: '0 0 6px' }}>
+            אופני עיר · סינגל ספיד
+          </p>
+          <p style={{ fontSize: '16px', color: DARK, lineHeight: 1.8, margin: '0 0 20px' }}>
+            מותג ישראלי חדש — מעוצב, פשוט, קל.<br />
+            <strong>במחיר שסטודנט יכול להרשות לעצמו.</strong>
+          </p>
+          <div style={{ width: '40px', height: '2px', backgroundColor: GOLD, margin: '0 auto 20px' }} />
+          <p style={{ fontSize: '15px', color: MUTED, lineHeight: 1.8, margin: 0 }}>
+            המכולה הראשונה בדרך —<br />
+            עזרו לנו להחליט אילו צבעים ייכנסו אליה.
+          </p>
+        </div>
+
+        <motion.button
+          onClick={() => setIntro(false)}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            ...btn,
+            padding: '18px 48px', borderRadius: '14px', border: 'none',
+            backgroundColor: GOLD, color: DARK,
+            fontFamily: "'Heebo', sans-serif", fontSize: '17px', fontWeight: 800,
+            cursor: 'pointer', letterSpacing: '0.02em',
+          }}
+        >
+          בואו נצביע →
+        </motion.button>
+      </motion.div>
+    </div>
+  )
 
   // Language screen
   if (!lang) return (
