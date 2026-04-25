@@ -28,7 +28,7 @@ type Answers = {
   intent: string
 }
 
-const STEPS = ['transport', 'age', 'gender', 'city', 'colors', 'bike', 'occupation', 'intent', 'lead'] as const
+const STEPS = ['gender', 'age', 'city', 'occupation', 'transport', 'bike', 'colors', 'intent', 'lead'] as const
 type Step = typeof STEPS[number]
 
 const btn: React.CSSProperties = {
