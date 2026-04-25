@@ -295,14 +295,19 @@ function LeadPage({ lang, onSubmit, onSkip, submitting }: {
   )
 }
 
+const SURVEY_DONE_KEY = 'spinz_survey_done'
+const MIN_SURVEY_MS = 30_000 // 30 seconds minimum
+
 export default function App() {
   const [intro, setIntro] = useState(true)
   const [lang, setLang] = useState<Lang | null>(null)
   const [step, setStep] = useState(0)
   const [dir, setDir] = useState(1)
   const [done, setDone] = useState(false)
+  const [alreadyDone] = useState(() => !!localStorage.getItem(SURVEY_DONE_KEY))
   const [submittedWithLead, setSubmittedWithLead] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [startTime, setStartTime] = useState<number | null>(null)
   const [answers, setAnswers] = useState<Answers>({
     transport: '', age: '', gender: '', city: '', colors: [], bike: '', occupation: '', intent: '',
   })
@@ -326,6 +331,12 @@ export default function App() {
   }
 
   const submitSurvey = async (name = '', phone = '', email = '') => {
+    // Time check — reject if completed suspiciously fast
+    if (startTime && Date.now() - startTime < MIN_SURVEY_MS) {
+      setSubmittedWithLead(false)
+      setDone(true)
+      return
+    }
     setSubmitting(true)
     const { error } = await supabase.from('survey_responses').insert({
       lang,
@@ -349,10 +360,27 @@ export default function App() {
       setSubmitting(false)
       return
     }
+    localStorage.setItem(SURVEY_DONE_KEY, '1')
     setSubmittedWithLead(!!(name || phone || email))
     setSubmitting(false)
     setDone(true)
   }
+
+  // Already submitted screen
+  if (alreadyDone && !done) return (
+    <div style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} style={{ textAlign: 'center', maxWidth: '400px', width: '100%' }}>
+        <img src="/logo.png" alt="SPINZ" style={{ height: '52px', marginBottom: '28px', objectFit: 'contain' }} />
+        <div style={{ fontSize: '48px', marginBottom: '16px' }}>🙌</div>
+        <div style={{ fontFamily: "'Heebo', sans-serif", fontWeight: 900, fontSize: '26px', color: DARK, marginBottom: '12px' }}>
+          כבר השתתפת — תודה!
+        </div>
+        <p style={{ fontFamily: "'Heebo', sans-serif", color: MUTED, fontSize: '15px', lineHeight: 1.7 }}>
+          הקול שלך כבר נרשם.<br />נעדכן אותך כשהאופניים מגיעים 🚲
+        </p>
+      </motion.div>
+    </div>
+  )
 
   // Language screen
   if (!lang) return (
@@ -432,7 +460,7 @@ export default function App() {
           </p>
         </div>
         <motion.button
-          onClick={() => setIntro(false)}
+          onClick={() => { setIntro(false); setStartTime(Date.now()) }}
           whileTap={{ scale: 0.97 }}
           style={{
             ...btn,
