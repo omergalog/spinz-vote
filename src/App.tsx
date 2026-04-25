@@ -389,16 +389,18 @@ export default function App() {
         {answers.intent && (
           <AnimatePresence>
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {/* Primary CTA */}
-              <button onClick={() => go(1)} style={{
-                ...btn,
-                width: '100%', padding: '16px', borderRadius: '14px', border: 'none',
-                backgroundColor: GOLD, color: DARK,
-                fontFamily: "'Heebo', sans-serif", fontSize: '16px', fontWeight: 800, cursor: 'pointer',
-                minHeight: '56px',
-              }}>
-                {lang === 'he' ? '🔔 כן, אני רוצה לשמוע ראשון/ה!' : '🔔 Yes, notify me first!'}
-              </button>
+              {/* Primary CTA — only for interested users */}
+              {answers.intent !== 'not_interested' && (
+                <button onClick={() => go(1)} style={{
+                  ...btn,
+                  width: '100%', padding: '16px', borderRadius: '14px', border: 'none',
+                  backgroundColor: GOLD, color: DARK,
+                  fontFamily: "'Heebo', sans-serif", fontSize: '16px', fontWeight: 800, cursor: 'pointer',
+                  minHeight: '56px',
+                }}>
+                  {lang === 'he' ? '🔔 כן, אני רוצה לשמוע ראשון/ה!' : '🔔 Yes, notify me first!'}
+                </button>
+              )}
               {/* Secondary — finish without details */}
               <button onClick={() => submitSurvey()} disabled={submitting} style={{
                 ...btn,
