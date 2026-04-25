@@ -79,24 +79,17 @@ function ColorPicker({ answers, setAnswers, lang }: { answers: Answers; setAnswe
 
   const renderGroup = (colors: typeof BIKE_COLORS, label: string, n: number) => (
     <div style={{ marginBottom: '28px' }}>
-      <div style={{
-        width: '100%', aspectRatio: '16/7', borderRadius: '16px',
-        backgroundColor: '#E8E4DC', border: `1px solid ${BORDER}`,
-        display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px',
-      }}>
-        <div style={{ textAlign: 'center', color: MUTED, fontFamily: "'Heebo', sans-serif" }}>
-          <div style={{ fontSize: '36px', marginBottom: '6px' }}>🚲</div>
-          <div style={{ fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' }}>{label}</div>
-          <div style={{ fontSize: '11px', marginTop: '3px', color: '#B0A898' }}>
-            {lang === 'he' ? `תמונה ${n} — בקרוב` : `Image ${n} — coming soon`}
-          </div>
-        </div>
-      </div>
+      <img
+        src={`/survey-${n}.jpeg`}
+        alt={label}
+        style={{ width: '100%', borderRadius: '16px', marginBottom: '14px', display: 'block', border: `1px solid ${BORDER}` }}
+      />
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
         {colors.map(c => {
           const rank = rankOf(c.id)
           const chosen = rank > 0
           const full = answers.colors.length >= 3 && !chosen
+          const name = lang === 'he' ? c.nameHe : c.nameEn
           return (
             <button key={c.id} onClick={() => toggle(c.id)} disabled={full} style={{
               ...btn,
@@ -129,7 +122,7 @@ function ColorPicker({ answers, setAnswers, lang }: { answers: Answers; setAnswe
                 fontFamily: "'Heebo', sans-serif", fontSize: '10px',
                 color: chosen ? DARK : MUTED, fontWeight: chosen ? 700 : 400,
                 textAlign: 'center', lineHeight: 1.2,
-              }}>{c.name}</span>
+              }}>{name}</span>
             </button>
           )
         })}
