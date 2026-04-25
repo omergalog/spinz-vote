@@ -376,21 +376,32 @@ export default function App() {
         {[['decided', tx.opt_decided], ['considering', tx.opt_considering], ['curious', tx.opt_curious]].map(([v, l]) => (
           <OptionBtn key={v} label={l} selected={answers.intent === v} onClick={() => setAnswers({ ...answers, intent: v })} />
         ))}
-        {/* CTA to lead page */}
         {answers.intent && (
-          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} style={{ marginTop: '8px', padding: '16px', borderRadius: '14px', backgroundColor: `${GOLD}18`, border: `1.5px solid ${GOLD}44`, textAlign: 'center' }}>
-            <p style={{ fontFamily: "'Heebo', sans-serif", fontSize: '13px', color: DARK, margin: '0 0 10px', fontWeight: 600 }}>
-              {tx.intent_lead_cta}
-            </p>
-            <button onClick={() => go(1)} style={{
-              ...btn,
-              padding: '10px 24px', borderRadius: '10px', border: 'none',
-              backgroundColor: GOLD, color: DARK,
-              fontFamily: "'Heebo', sans-serif", fontSize: '14px', fontWeight: 800, cursor: 'pointer',
-            }}>
-              {lang === 'he' ? 'כן, אני רוצה!' : 'Yes, count me in!'}
-            </button>
-          </motion.div>
+          <AnimatePresence>
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} style={{ marginTop: '12px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {/* Primary CTA */}
+              <button onClick={() => go(1)} style={{
+                ...btn,
+                width: '100%', padding: '16px', borderRadius: '14px', border: 'none',
+                backgroundColor: GOLD, color: DARK,
+                fontFamily: "'Heebo', sans-serif", fontSize: '16px', fontWeight: 800, cursor: 'pointer',
+                minHeight: '56px',
+              }}>
+                {lang === 'he' ? '🔔 כן, אני רוצה לשמוע ראשון/ה!' : '🔔 Yes, notify me first!'}
+              </button>
+              {/* Secondary — finish without details */}
+              <button onClick={() => submitSurvey()} disabled={submitting} style={{
+                ...btn,
+                width: '100%', padding: '15px', borderRadius: '14px',
+                border: `1.5px solid ${BORDER}`,
+                backgroundColor: '#FFFFFF', color: MUTED,
+                fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer',
+                minHeight: '56px',
+              }}>
+                {submitting ? '...' : (lang === 'he' ? 'סיים בלי להשאיר פרטים' : 'Finish without details')}
+              </button>
+            </motion.div>
+          </AnimatePresence>
         )}
       </div>
     )
