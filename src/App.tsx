@@ -333,45 +333,6 @@ export default function App() {
     setDone(true)
   }
 
-  // Intro screen
-  if (intro) return (
-    <div dir="rtl" style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 24px' }}>
-      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22,1,0.36,1] }}
-        style={{ maxWidth: '440px', width: '100%', textAlign: 'center' }}>
-        <img src="/logo.png" alt="SPINZ" style={{ height: '52px', objectFit: 'contain', marginBottom: '32px' }} />
-
-        <div style={{ fontFamily: "'Heebo', sans-serif", marginBottom: '32px' }}>
-          <p style={{ fontSize: '13px', color: MUTED, letterSpacing: '0.2em', textTransform: 'uppercase', margin: '0 0 6px' }}>
-            אופני עיר · סינגל ספיד
-          </p>
-          <p style={{ fontSize: '16px', color: DARK, lineHeight: 1.8, margin: '0 0 20px' }}>
-            מותג ישראלי חדש — מעוצב, פשוט, קל.<br />
-            <strong>במחיר שסטודנט יכול להרשות לעצמו.</strong>
-          </p>
-          <div style={{ width: '40px', height: '2px', backgroundColor: GOLD, margin: '0 auto 20px' }} />
-          <p style={{ fontSize: '15px', color: MUTED, lineHeight: 1.8, margin: 0 }}>
-            המכולה הראשונה בדרך —<br />
-            עזרו לנו להחליט אילו צבעים ייכנסו אליה.
-          </p>
-        </div>
-
-        <motion.button
-          onClick={() => setIntro(false)}
-          whileTap={{ scale: 0.97 }}
-          style={{
-            ...btn,
-            padding: '18px 48px', borderRadius: '14px', border: 'none',
-            backgroundColor: GOLD, color: DARK,
-            fontFamily: "'Heebo', sans-serif", fontSize: '17px', fontWeight: 800,
-            cursor: 'pointer', letterSpacing: '0.02em',
-          }}
-        >
-          בואו נצביע ←
-        </motion.button>
-      </motion.div>
-    </div>
-  )
-
   // Language screen
   if (!lang) return (
     <div style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
@@ -392,6 +353,44 @@ export default function App() {
             </button>
           ))}
         </div>
+      </motion.div>
+    </div>
+  )
+
+  // Intro screen (after language selection)
+  if (intro) return (
+    <div dir={tx.dir} style={{ minHeight: '100dvh', backgroundColor: BEIGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 24px' }}>
+      <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22,1,0.36,1] }}
+        style={{ maxWidth: '440px', width: '100%', textAlign: 'center' }}>
+        <img src="/logo.png" alt="SPINZ" style={{ height: '52px', objectFit: 'contain', marginBottom: '32px' }} />
+        <div style={{ fontFamily: "'Heebo', sans-serif", marginBottom: '32px' }}>
+          <p style={{ fontSize: '13px', color: MUTED, letterSpacing: '0.2em', textTransform: 'uppercase', margin: '0 0 16px' }}>
+            {tx.intro_sub}
+          </p>
+          <p style={{ fontSize: '16px', color: DARK, lineHeight: 1.8, margin: '0 0 4px' }}>
+            {tx.intro_body1}
+          </p>
+          <p style={{ fontSize: '16px', color: DARK, lineHeight: 1.8, margin: '0 0 20px', fontWeight: 700 }}>
+            {tx.intro_body2}
+          </p>
+          <div style={{ width: '40px', height: '2px', backgroundColor: GOLD, margin: '0 auto 20px' }} />
+          <p style={{ fontSize: '15px', color: MUTED, lineHeight: 1.8, margin: 0 }}>
+            {tx.intro_body3}<br />{tx.intro_body4}
+          </p>
+        </div>
+        <motion.button
+          onClick={() => setIntro(false)}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            ...btn,
+            padding: '18px 48px', borderRadius: '14px', border: 'none',
+            backgroundColor: GOLD, color: DARK,
+            fontFamily: "'Heebo', sans-serif", fontSize: '17px', fontWeight: 800,
+            cursor: 'pointer',
+          }}
+        >
+          {tx.intro_cta}
+        </motion.button>
       </motion.div>
     </div>
   )
