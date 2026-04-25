@@ -391,6 +391,14 @@ export default function App() {
         >
           {tx.intro_cta}
         </motion.button>
+
+        <button onClick={() => setLang(null)} style={{
+          ...btn, background: 'none', border: 'none', color: MUTED,
+          fontFamily: "'Heebo', sans-serif", fontSize: '14px', cursor: 'pointer',
+          marginTop: '16px', padding: '8px', textDecoration: 'underline', textUnderlineOffset: '3px',
+        }}>
+          {tx.back}
+        </button>
       </motion.div>
     </div>
   )
@@ -540,8 +548,8 @@ export default function App() {
         {/* Nav — not on lead or intent (intent has its own CTA) */}
         {currentStep !== 'lead' && currentStep !== 'intent' && (
           <div style={{ display: 'flex', gap: '10px', marginTop: '28px', flexDirection: tx.dir === 'rtl' ? 'row' : 'row-reverse' }}>
-            {step > 0 && (
-              <button onClick={() => go(-1)} style={{
+            {step >= 0 && (
+              <button onClick={() => step === 0 ? setIntro(true) : go(-1)} style={{
                 ...btn,
                 padding: '16px 24px', borderRadius: '14px', border: `1px solid ${BORDER}`,
                 backgroundColor: '#FFFFFF', color: MUTED,
@@ -566,7 +574,7 @@ export default function App() {
         {/* Back button on intent step */}
         {currentStep === 'intent' && (
           <div style={{ marginTop: '20px' }}>
-            <button onClick={() => go(-1)} style={{
+            <button onClick={() => step === 0 ? setIntro(true) : go(-1)} style={{
               ...btn,
               padding: '14px 24px', borderRadius: '14px', border: `1px solid ${BORDER}`,
               backgroundColor: '#FFFFFF', color: MUTED,
