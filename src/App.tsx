@@ -548,7 +548,9 @@ export default function App() {
                 fontFamily: "'Heebo', sans-serif", fontSize: '15px', cursor: 'pointer',
                 minHeight: '56px',
               }}>
-                {submitting ? '...' : (lang === 'he' ? 'סיים בלי להשאיר פרטים' : 'Finish without details')}
+                {submitting ? '...' : answers.age === 'under_20'
+                  ? (lang === 'he' ? 'סיום' : 'Finish')
+                  : (lang === 'he' ? 'סיים בלי להשאיר פרטים' : 'Finish without details')}
               </button>
             </motion.div>
           </AnimatePresence>
